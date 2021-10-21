@@ -1,11 +1,10 @@
 package com.anushka.bindingdemo1
 
-import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         val messageView = findViewById<TextView>(R.id.greeting_text_view)
         val nameText = findViewById<EditText>(R.id.name_edit_text)
 
-        val message = "Hello! "+ nameText.text
+        val message = "Hello! " + nameText.text
         messageView.text = message
     }
 }
