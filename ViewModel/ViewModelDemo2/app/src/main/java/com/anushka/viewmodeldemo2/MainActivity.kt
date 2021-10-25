@@ -3,6 +3,7 @@ package com.anushka.viewmodeldemo2
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.anushka.viewmodeldemo2.databinding.ActivityMainBinding
 
@@ -17,12 +18,13 @@ class MainActivity : AppCompatActivity() {
         viewModelFactory = MainActivityViewModelFactory(125)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
-        dataBinding.resultTextView.text = viewModel.getTotal().toString()
+        viewModel.totalData.observe(this, Observer {
+            dataBinding.resultTextView.text = it.toString()
+        })
 
         dataBinding.insertButton.setOnClickListener {
             dataBinding.apply {
                 viewModel.setTotal(inputEditText.text.toString().toInt())
-                resultTextView.text = viewModel.getTotal().toString()
             }
         }
     }
