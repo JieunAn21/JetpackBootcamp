@@ -2,6 +2,7 @@ package com.example.recyclerviewdemo1
 
 import android.graphics.Color
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,6 +25,12 @@ class MainActivity : AppCompatActivity() {
         val myRecyclerView = findViewById<RecyclerView>(R.id.my_recycler_view)
         myRecyclerView.setBackgroundColor(Color.YELLOW)
         myRecyclerView.layoutManager = LinearLayoutManager(this)
-        myRecyclerView.adapter = MyRecyclerViewAdapter(fruitsList)
+        myRecyclerView.adapter = MyRecyclerViewAdapter(fruitsList) { selectedFruitItem: Fruit ->
+            listItemClicked(selectedFruitItem)
+        }
+    }
+
+    private fun listItemClicked(fruit: Fruit) {
+        Toast.makeText(this, "Supplier name is ${fruit.supplier}", Toast.LENGTH_LONG).show()
     }
 }
