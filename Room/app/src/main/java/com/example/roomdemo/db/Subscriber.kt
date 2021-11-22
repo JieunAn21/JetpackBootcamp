@@ -9,11 +9,11 @@ data class Subscriber(
 
     @PrimaryKey(autoGenerate = true) //primarykey 지정 및 자동 생성성
     @ColumnInfo(name = "subscriber_id") //컬럼 이름 지정
-    val id: Int,
+    var id: Int,
 
     @ColumnInfo(name = "subscriber_name")
-    val name: String,
+    var name: String,
 
     @ColumnInfo(name = "subscriber_email")
-    val email: String
+    var email: String
 )
