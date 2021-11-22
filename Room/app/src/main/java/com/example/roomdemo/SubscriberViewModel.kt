@@ -23,7 +23,7 @@ class SubscriberViewModel(private val repository: SubscriberRepository) : ViewMo
 
     fun saveOrUpdate() {
         val name = inputName.value!!
-        val email = inputName.value!!
+        val email = inputEmail.value!!
         insert(
             Subscriber(
                 0,
