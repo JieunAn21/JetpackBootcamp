@@ -28,6 +28,12 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initRecyclerView()
+
+        subscriberViewModel.message.observe(this, {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(this, it, Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun initRecyclerView() {
@@ -39,13 +45,13 @@ class MainActivity : AppCompatActivity() {
         subscriberViewModel.subscribers.observe(this, {
             Log.i("MYTAG", it.toString())
             binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(
-                it,
-                { selectedItem: Subscriber -> listItemClicked(selectedItem) })
+                it
+            ) { selectedItem: Subscriber -> listItemClicked(selectedItem) }
         })
     }
 
     private fun listItemClicked(subscriber: Subscriber) {
-        Toast.makeText(this, "selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
+        //Toast.makeText(this, "selected name is ${subscriber.name}", Toast.LENGTH_LONG).show()
         subscriberViewModel.initUpdateAndDelete(subscriber)
     }
 }
