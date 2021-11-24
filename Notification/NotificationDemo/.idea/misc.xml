@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/Notification/NotificationDemo/app/src/main/res/layout/activity_detail.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/Notification/NotificationDemo/app/src/main/res/layout/activity_main.xml" value="0.27943840579710144" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/Notification/NotificationDemo/app/src/main/res/layout/activity_setting.xml" value="0.36614583333333334" />
       </map>
     </option>
   </component>
