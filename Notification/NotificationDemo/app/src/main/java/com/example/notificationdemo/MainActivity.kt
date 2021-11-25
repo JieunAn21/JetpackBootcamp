@@ -1,5 +1,6 @@
 package com.example.notificationdemo
 
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -9,10 +10,12 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.core.app.RemoteInput
 
 class MainActivity : AppCompatActivity() {
     private val channelID = "com.example.notificationdemo.channel1"
     private var notificationManager: NotificationManager? = null
+    private val KEY_REPLY = "key_reply"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,19 @@ class MainActivity : AppCompatActivity() {
         val tapResultIntent = Intent(this, SecondActivity::class.java)
         val pendingIntent =
             PendingIntent.getActivity(this, 0, tapResultIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        //reply action
+        val remoteInput: RemoteInput = RemoteInput.Builder(KEY_REPLY).run {
+            setLabel("Insert your name here")
+            build()
+        }
+
+        val replyAction: NotificationCompat.Action = NotificationCompat.Action.Builder(
+            0,
+            "REPLY", //버튼에 표시되는 텍스트
+            pendingIntent
+        ).addRemoteInput(remoteInput)
+            .build()
 
         //action button 1
         val intent2 = Intent(this, DetailActivity::class.java)
@@ -53,9 +69,9 @@ class MainActivity : AppCompatActivity() {
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setContentIntent(pendingIntent)
             .addAction(action2)
             .addAction(action3)
+            .addAction(replyAction)
             .build()
         notificationManager?.notify(notificationId, notification)
     }
