@@ -9,7 +9,7 @@ class UploadWorker(context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
     override fun doWork(): Result {
         return try {
-            for (i in 0..600) {
+            for (i in 0..600000) {
                 Log.i("MYTAG", "Uploading $i")
             }
             Result.success()
