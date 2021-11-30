@@ -1,6 +1,5 @@
 package com.example.tmdbclient.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -17,5 +16,5 @@ interface MovieDao {
     suspend fun deleteAllMovies()
 
     @Query("SELECT * FROM popular_movies")
-    fun getMovies(): LiveData<List<Movie>>
+    fun getMovies(): List<Movie>
 }

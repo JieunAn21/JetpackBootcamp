@@ -1,6 +1,5 @@
 package com.example.tmdbclient.data.db
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -17,5 +16,5 @@ interface ArtistDao {
     suspend fun deleteAllArtists()
 
     @Query("SELECT * FROM popular_artists")
-    fun getArtists(): LiveData<List<Artist>>
+    fun getArtists(): List<Artist>
 }
