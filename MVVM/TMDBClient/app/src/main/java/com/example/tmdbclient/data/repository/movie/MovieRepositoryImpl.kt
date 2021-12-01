@@ -62,7 +62,7 @@ class MovieRepositoryImpl(
         lateinit var movieList: List<Movie>
 
         try {
-            val movieList = movieCacheDataSource.getMoviesFromCache()
+            movieList = movieCacheDataSource.getMoviesFromCache()
         } catch (exception: Exception) {
             Log.i("MyTag", exception.message.toString())
         }

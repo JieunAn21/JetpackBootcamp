@@ -16,5 +16,5 @@ interface ArtistDao {
     suspend fun deleteAllArtists()
 
     @Query("SELECT * FROM popular_artists")
-    fun getArtists(): List<Artist>
+    suspend fun getArtists(): List<Artist>
 }
