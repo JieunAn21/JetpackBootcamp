@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/layout/activity_main.xml" value="0.2708333333333333" />
         <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/layout/fragment_info.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/layout/fragment_news.xml" value="0.18840579710144928" />
         <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/layout/fragment_saved.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/layout/news_list_item.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/user/AndroidStudioProjects/JetpackBootcamp/MVVM/NewsAPIClient/app/src/main/res/menu/bottom_menu.xml" value="0.34791666666666665" />
       </map>
     </option>
