@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.AbsListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsapiclient.data.util.Resource
@@ -18,7 +19,7 @@ class NewsFragment : Fragment() {
     private lateinit var viewModel: NewsViewModel
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var fragmentNewsBinding: FragmentNewsBinding
-    private var country = "kr"
+    private var country = "us"
     private var page = 1
     private var isScrolling = false
     private var isLoading = false
@@ -38,6 +39,12 @@ class NewsFragment : Fragment() {
         fragmentNewsBinding = FragmentNewsBinding.bind(view)
         viewModel = (activity as MainActivity).viewModel
         newsAdapter = (activity as MainActivity).newsAdapter
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("selected_article", it)
+            }
+            findNavController().navigate(R.id.action_newsFragment_to_infoFragment, bundle)
+        }
         initRecyclerView()
         viewNewsList()
     }
@@ -51,10 +58,10 @@ class NewsFragment : Fragment() {
                     response.data?.let {
                         newsAdapter.differ.submitList(it.articles.toList())
                         // 총 페이지수 계산
-                        if (it.totalResults % 20 == 0) {
-                            pages = it.totalResults / 20
+                        pages = if (it.totalResults % 20 == 0) {
+                            it.totalResults / 20
                         } else {
-                            pages = it.totalResults / 20 + 1
+                            it.totalResults / 20 + 1
                         }
                         isLastPage = page == pages // 현재 페이지가 마지막 페이지인지 체크
                     }
@@ -62,7 +69,7 @@ class NewsFragment : Fragment() {
                 is Resource.Error -> {
                     hideProgressBar()
                     response.message?.let {
-                        Toast.makeText(activity, "An erro occurred : %it", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "An error occurred : %it", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {
