@@ -11,11 +11,13 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsapiclient.data.model.APIResponse
 import com.example.newsapiclient.data.util.Resource
 import com.example.newsapiclient.domain.usecase.GetNewsHeadlinesUseCase
+import com.example.newsapiclient.domain.usecase.GetSearchedNewsUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
+    private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
     private val app: Application
 ) : AndroidViewModel(app) {
     val newsHeadLines = MutableLiveData<Resource<APIResponse>>()
@@ -64,5 +66,24 @@ class NewsViewModel(
         }
         return false
 
+    }
+
+    //search
+    val searchedNews = MutableLiveData<Resource<APIResponse>>()
+
+    fun getSearchedNews(searchQuery: String, country: String, page: Int) {
+        viewModelScope.launch {
+            searchedNews.postValue(Resource.Loading())
+            try {
+                if (isNetworkAvailable(app)) {
+                    val apiResult = getSearchedNewsUseCase.execute(searchQuery, country, page)
+                    searchedNews.postValue(apiResult)
+                } else {
+                    searchedNews.postValue(Resource.Error("인터넷 사용 불가"))
+                }
+            } catch (e: Exception) {
+                searchedNews.postValue(Resource.Error(e.message.toString()))
+            }
+        }
     }
 }
