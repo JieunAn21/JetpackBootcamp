@@ -5,22 +5,29 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.newsapiclient.data.model.APIResponse
+import com.example.newsapiclient.data.model.Article
 import com.example.newsapiclient.data.util.Resource
-import com.example.newsapiclient.domain.usecase.GetNewsHeadlinesUseCase
-import com.example.newsapiclient.domain.usecase.GetSearchedNewsUseCase
+import com.example.newsapiclient.domain.usecase.*
+import com.example.newsapiclient.presentation.Event
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val getNewsHeadlinesUseCase: GetNewsHeadlinesUseCase,
     private val getSearchedNewsUseCase: GetSearchedNewsUseCase,
+    private val saveNewsUseCase: SaveNewsUseCase,
+    private val getSavedNewsUseCase: GetSavedNewsUseCase,
+    private val deleteSavedNewsUseCase: DeleteSavedNewsUseCase,
     private val app: Application
 ) : AndroidViewModel(app) {
     val newsHeadLines = MutableLiveData<Resource<APIResponse>>()
+
+    private val statusMessage = MutableLiveData<Event<String>>()
+    val message: LiveData<Event<String>>
+        get() = statusMessage
 
     fun getNewsHeadLines(country: String, page: Int) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,5 +92,25 @@ class NewsViewModel(
                 searchedNews.postValue(Resource.Error(e.message.toString()))
             }
         }
+    }
+
+    //local data
+    fun saveArticle(article: Article) = viewModelScope.launch {
+        val newRowId = saveNewsUseCase.execute(article)
+        if (newRowId > -1) {
+            statusMessage.value = Event("Saved Successfully")
+        } else {
+            statusMessage.value = Event("Error Occurred")
+        }
+    }
+
+    fun getSavedNews() = liveData {
+        getSavedNewsUseCase.execute().collect {
+            emit(it)
+        }
+    }
+
+    fun deleteArticle(article: Article) = viewModelScope.launch {
+        deleteSavedNewsUseCase.execute(article)
     }
 }
